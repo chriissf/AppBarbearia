@@ -10,7 +10,7 @@ export default function App() {
       {/* Configuração da barra de status */}
       <StatusBar backgroundColor="#38A69D" barStyle="light-content" />
       {/* Componente de rotas do aplicativo */}
-      <Routes/>
+      <Routes />
     </NavigationContainer>
   );
 }
