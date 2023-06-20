@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import * as Animation from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/native';
 
-import * as Animation from 'react-native-animatable'
+export default function Login() {
+  const navigation = useNavigation();
 
-export default function SignIn() {
   return (
     <View style={styles.container}>
-
       <Animation.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-        <Text style={styles.message}> Bem Vindo(a)</Text>
-
+        <Text style={styles.message}>Login</Text>
       </Animation.View>
 
       <Animation.View animation="fadeInUp" style={styles.containerForm}>
@@ -17,28 +17,23 @@ export default function SignIn() {
         <TextInput
           placeholder='Digite um Email'
           style={styles.input}
-
         />
+
         <Text style={styles.title}>Senha</Text>
         <TextInput
           placeholder='Digite sua Senha'
           style={styles.input}
-
         />
 
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Acessar</Text>
-
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonRegister}>
-          <Text style={styles.registerText}>Não possui uma Conta?Cadastre-se</Text>
-
+        <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('Register')}>
+          <Text style={styles.registerText}>Não possui uma Conta? Cadastre-se</Text>
+          <Text style={styles.buttonText}>Cadastre-se</Text>
         </TouchableOpacity>
-
-
       </Animation.View>
-
     </View>
   );
 }
@@ -47,21 +42,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#38a69d"
-
   },
   containerHeader: {
-
     marginTop: '14%',
     marginBottom: '8%',
     paddingStart: '5%',
-
   },
   message: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#FFFFFF',
-
-
   },
   containerForm: {
     backgroundColor: '#fff',
@@ -70,11 +60,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     paddingStart: '5%',
     paddingEnd: '5%',
-
   },
-
   title: {
-
     fontSize: 20,
     marginTop: 28,
   },
@@ -83,6 +70,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 12,
     fontSize: 16,
+
   },
   button: {
     backgroundColor: '#38a69d',
@@ -96,27 +84,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
-
   buttonRegister: {
     marginTop: 14,
-    alignSelf: 'center'
-
+    alignSelf: 'center',
   },
-
   registerText: {
-    color: '#a1a1a1'
-
-
-  }
-
-
-
-
-
-
-
-
-
-})
+    color: '#a1a1a1',
+  },
+});
