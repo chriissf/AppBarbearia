@@ -1,33 +1,46 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Welcome({ navigation }) {
+import * as Animatable from 'react-native-animatable';
+
+import { useNavigation } from '@react-navigation/native';
+
+export default function Welcome() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <View style={styles.containerRodape}>
-        <Image
-          source={require('../../../assets/herder.png')}
-          style={styles.imageRodape}
-          resizeMode="contain"
-        />
-      </View>
-
       <View style={styles.containerLogo}>
-        <Text style={styles.textoLogo}>Bem-vindo!</Text>
-        <Image
-          source={require('../../../assets/logo.png')}
-          style={styles.imageLogo}
-          resizeMode="contain"
+        <Animatable.Image
+          Animatable="flipInY"
+          source={require('../../assets/logo.png')}
+          style={{ width: '100%' }}
+          resizeMode='contain'
+
         />
+
       </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('SinghIn')}
-      >
-        <Text style={styles.buttonText}>Logar ou Cadastrar</Text>
-      </TouchableOpacity>
-    </View>
+
+      <Animatable.View delay={1000} animation="fadeInUp" style={styles.containerForm}>
+        <Text style={styles.title}>Cadastre para Aproveitar as Ofertas!</Text>
+        <Text style={styles.text}>Faça Login para Começar</Text>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('SignIn')}
+        >
+
+
+          <Text style={styles.buttonText}>Acessar</Text>
+
+        </TouchableOpacity>
+      </Animatable.View>
+
+
+
+    </View >
+
   );
 }
 
@@ -35,39 +48,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#38a69d'
+
   },
   containerLogo: {
+    flex: 2,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
   },
-  containerRodape: {
-    marginBottom: 20,
+  containerForm: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingStart: '5%'
   },
-  imageLogo: {
-    width: 200,
-    height: 200,
-  },
-  imageRodape: {
-    width: '100%',
-    height: 100,
-  },
-  textoLogo: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 28,
+    marginBottom: 12,
+  },
+  text: {
+    color: '#a1a1a1'
   },
   button: {
-    backgroundColor: '#FF3366',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    marginTop: 20,
+    position: 'absolute',
+    backgroundColor: '#38a69d',
+    paddingVertical: 8,
+    borderRadius: 50,
+    width: '60%',
+    bottom: '15%',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+    alignSelf: 'center',
+
   },
 });
+
