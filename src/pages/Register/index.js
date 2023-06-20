@@ -1,11 +1,64 @@
-import React from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-export default function Register() {
-    return (
-        <View style={styles.container}>
+const RegisterScreen = () => {
+    const [name, setName] = useState('');
+    const [data, setData] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+    const handleRegister = () => {
+        if (name.trim() === '') {
+            Alert.alert('Erro', 'Por favor, insira seu nome');
+            return;
+        }
+
+        if (data.trim() === '') {
+            Alert.alert('Erro', 'Por favor, insira sua data de nascimento');
+            return;
+        }
+
+        if (endereco.trim() === '') {
+            Alert.alert('Erro', 'Por favor, insira seu endereço');
+            return;
+        }
+
+        if (email.trim() === '') {
+            Alert.alert('Erro', 'Por favor, insira um email válido');
+            return;
+        }
+
+        if (password.trim() === '') {
+            Alert.alert('Erro', 'Por favor, insira sua senha');
+            return;
+        }
+
+        // Lógica para enviar a requisição HTTP para cadastrar o usuário
+        Alert.alert('Cadastro', `Nome: ${name}\nEmail: ${email}\nData de Nascimento: ${data}\nEndereço: ${endereco}\nSenha: ${password}`);
+        Alert.alert("Cadastrado com Sucesso!");
+
+        // Limpar o formulário após o cadastro
+        setName('');
+        setData('');
+        setEndereco('');
+        setEmail('');
+        setPassword('');
+    };
+
+    const formatDate = (text) => {
+        if (text.length === 2 || text.length === 5) {
+            text += '/';
+        }
+        setData(text);
+    };
+
+    return (
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
             <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
                 <Text style={styles.message}> Cadastre-se</Text>
             </Animatable.View>
@@ -13,48 +66,65 @@ export default function Register() {
             <Animatable.View animation="fadeInUp" style={styles.containerForm}>
                 <Text style={styles.title}>Nome</Text>
                 <TextInput
-                    placeholder='Digite Seu Nome: '
+                    placeholder='Digite Seu Nome'
+                    value={name}
+                    onChangeText={text => setName(text)}
+                    style={styles.input}
+                />
+
+                <Text style={styles.title}>Data</Text>
+                <TextInput
+                    placeholder='Digite Data de Nascimento (dd/mm/aaaa)'
+                    value={data}
+                    onChangeText={text => formatDate(text)}
                     style={styles.input}
                 />
 
                 <Text style={styles.title}>Endereço</Text>
                 <TextInput
-                    placeholder='Digite Seu Endereço: '
+                    placeholder='Digite Seu Endereço'
+                    value={endereco}
+                    onChangeText={text => setEndereco(text)}
                     style={styles.input}
                 />
 
                 <Text style={styles.title}>Email</Text>
                 <TextInput
                     placeholder='Digite um Email'
+                    value={email}
+                    onChangeText={text => setEmail(text)}
                     style={styles.input}
+                    keyboardType="email-address"
                 />
 
                 <Text style={styles.title}>Senha</Text>
                 <TextInput
                     placeholder='Digite sua Senha'
+                    value={password}
+                    onChangeText={text => setPassword(text)}
                     style={styles.input}
+                    secureTextEntry={true}
                 />
             </Animatable.View>
 
             <Animatable.View delay={1000} animation="fadeInUp" style={styles.containerForm}>
-                <Text style={styles.title}>Cadastre-se e aproveite as  Ofertas!</Text>
+                <Text style={styles.title}>Cadastre-se e aproveite as Ofertas!</Text>
 
                 <TouchableOpacity
                     style={styles.button}
-                    //  onPress={() => navigation.navigate('Register')}
-                    Alert='Dados Cadastrado'
+                    onPress={handleRegister}
                 >
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
             </Animatable.View>
-        </View >
+        </KeyboardAvoidingView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#38a69d"
+        backgroundColor: '#38a69d',
     },
     containerHeader: {
         marginTop: '14%',
@@ -71,13 +141,13 @@ const styles = StyleSheet.create({
         flex: 0,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
-        paddingLeft: '5%',
-        paddingRight: '5%',
-        paddingTop: '5%',
+        paddingLeft: '2%',
+        paddingRight: '2%',
+        paddingTop: '1%',
     },
     title: {
-        fontSize: 20,
-        marginTop: 28,
+        fontSize: 15,
+        marginTop: 25,
     },
     input: {
         borderBottomWidth: 1,
@@ -107,3 +177,5 @@ const styles = StyleSheet.create({
         color: '#a1a1a1',
     },
 });
+
+export default RegisterScreen;
